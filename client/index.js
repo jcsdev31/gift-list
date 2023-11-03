@@ -9,15 +9,18 @@ async function main() {
   // create the merkle tree for the whole nice list
   const merkleTree = new MerkleTree(niceList);
 
+  const root = merkleTree.getRoot();
+
   // find the proof that norman block is in the list 
-  const name = 'Robin Hessel Jr.';
+  const name = 'Traci McDermott';
   const index = niceList.findIndex(n => n === name);
   const proof = merkleTree.getProof(index);
 
   const { data: gift } = await axios.post(`${serverUrl}/gift`, {
     // TODO: add request body parameters here!
     proof,
-    name
+    name,
+    root
   });
 
   console.log({ gift });

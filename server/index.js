@@ -9,17 +9,14 @@ const app = express();
 app.use(express.json());
 
 // TODO: hardcode a merkle root here representing the whole nice list
-const merkleTree = new MerkleTree(niceList);
-const root = merkleTree.getRoot();
-
 // paste the hex string in here, without the 0x prefix
-const MERKLE_ROOT = root;
+const MERKLE_ROOT = '';
 
 app.post('/gift', (req, res) => {
-  const { proof, name } = req.body;
+  const { proof, name, root } = req.body;
 
   // TODO: prove that a name is in the list 
-  const isInTheList = verifyProof(proof, name, MERKLE_ROOT);
+  const isInTheList = verifyProof(proof, name, root);
 
   if(isInTheList) {
     res.send("You got a toy robot!");
